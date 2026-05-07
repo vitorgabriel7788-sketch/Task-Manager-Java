@@ -1,11 +1,20 @@
+package org.example;
+
 import java.util.ArrayList;
 
 public class GerenciadorTarefas {
     ArrayList<Tarefa> tarefas = new ArrayList<>();
+    ArquivoTarefa arquivoTarefa = new ArquivoTarefa();
+
+    public GerenciadorTarefas(){
+        tarefas = arquivoTarefa.carregar();
+    }
+
 
     void adicionar(String nome){
         Tarefa tarefa = new Tarefa(nome);
         tarefas.add(tarefa);
+        arquivoTarefa.salvar(tarefas);
     }
 
     void listar(){
@@ -18,6 +27,7 @@ public class GerenciadorTarefas {
     void concluir(int indice){
         if (indice >= 0 && indice < tarefas.size()){
             tarefas.get(indice).marcarComoConcluida();
+            arquivoTarefa.salvar(tarefas);
             System.out.println("Tarefa concluída");
         } else {
             System.out.println("Indíce inválido");
